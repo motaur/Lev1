@@ -3,6 +3,12 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 
+/*
+ * @autor Lev Berlinkov, ID 336137351
+ * Calculator, Parser and Lexer
+ * 
+ */
+
 public class Program 
 {
 	private static ArrayList<Token> tokens = new ArrayList<Token>();
@@ -26,11 +32,11 @@ public class Program
 					break;
 				
 				default:
-						tokens = lexer.tokenize(input);
-						
-						if(tokens != null)
-							 System.out.println(parser.line(tokens));
-						break;
+					tokens = lexer.tokenize(input);
+					
+					if(tokens != null)
+						 System.out.println(parser.line(tokens));
+					break;
 			}	
 						
 		}			

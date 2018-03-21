@@ -2,7 +2,7 @@ import java.util.ArrayList;
 
 public class Lexer 
 {	
-	private final String language = "0123456789 +-*/=();abcdefghijklmnoprstuqvwxyz";
+	private final String LANGUAGE = "0123456789 +-*/=();abcdefghijklmnoprstuqvwxyz";
 		
 	/*left breaker and right breaker amount*/
 	private int lp = 0;
@@ -29,14 +29,14 @@ public class Lexer
 			{
 				currentToken.append(ch);
 			}
-			else if( Character.isDigit(ch) && (language.indexOf(next) > 9) ) // char is digit, but next is not
+			else if( Character.isDigit(ch) && (LANGUAGE.indexOf(next) > 9) ) // char is digit, but next is not
 			{
 				currentToken.append(ch);
 				Token t = new Token(currentToken.toString());
 				tokens.add(t);
 				currentToken.setLength(0);
 			}
-			else if (language.indexOf(ch) > 9) 									//is symbol
+			else if (LANGUAGE.indexOf(ch) > 9) 									//is symbol
 			{
 				currentToken.append(ch);
 				Token t = new Token(currentToken.toString());
@@ -51,7 +51,7 @@ public class Lexer
 				
 		}
 		
-		if(language.indexOf(line.charAt(line.length()-1)) >= 0)					//last symbol
+		if(LANGUAGE.indexOf(line.charAt(line.length()-1)) >= 0)					//last symbol
 		{
 			currentToken.append(line.charAt(line.length()-1));
 			Token t = new Token(currentToken.toString());
@@ -61,7 +61,7 @@ public class Lexer
 		/*detecting tokens type*/
 		for(int j = 0; j < tokens.size(); j++)
 		{
-			int i = language.indexOf(tokens.get(j).getValue().charAt(0));				//indicator what type of token index in language
+			int i = LANGUAGE.indexOf(tokens.get(j).getValue().charAt(0));		//indicator what type of token index in language
 			
 			if(i >= 0 && i <= 9)
 			{				
@@ -163,8 +163,8 @@ public class Lexer
 		/*operators errors*/
 		for(int i= 0; i < tokens.size() - 1; i++)
 		{
-			int index = language.indexOf(tokens.get(i).getValue().charAt(0));
-			int nextIndex = language.indexOf(tokens.get(i + 1).getValue().charAt(0));
+			int index = LANGUAGE.indexOf(tokens.get(i).getValue().charAt(0));
+			int nextIndex = LANGUAGE.indexOf(tokens.get(i + 1).getValue().charAt(0));
 			
 			if( (index > 10 && index < 15)/*Operator*/ && (nextIndex > 10 && nextIndex < 15)/*operator*/)
 			{
@@ -192,7 +192,13 @@ public class Lexer
 			System.out.println("Empty expression");
 			return false;
 		}
-				
+		/* -variable = expression --> illegal input*/
+		if(tokens.get(0).getType() == Token.Type.sub && tokens.get(1).getType() == Token.Type.var && tokens.get(2).getType() == Token.Type.equ)
+		{
+			System.out.println("Illegal expression");
+			return false;
+		}
+		
 		return true;
 	}
 	
