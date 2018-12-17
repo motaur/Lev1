@@ -1,1 +1,2 @@
-#Simple calculator, using recursive descend method
+#Simple command line calculator
+using recurcive descend parsing method
